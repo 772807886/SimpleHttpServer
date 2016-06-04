@@ -17,6 +17,7 @@
 [Rr]eleases/
 x64/
 x86/
+build/
 bld/
 [Bb]in/
 [Oo]bj/
@@ -137,9 +138,11 @@ publish/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
-# TODO: Comment the next line if you want to checkin your web deploy settings 
-# but database connection strings (with potential passwords) will be unencrypted
-*.pubxml
+## TODO: Comment the next line if you want to checkin your
+## web deploy settings but do note that will include unencrypted
+## passwords
+#*.pubxml
+
 *.publishproj
 
 # NuGet Packages
@@ -154,7 +157,7 @@ publish/
 *.nuget.props
 *.nuget.targets
 
-# Microsoft Azure Build Output
+# Windows Azure Build Output
 csx/
 *.build.csdef
 
@@ -177,6 +180,7 @@ BundleArtifacts/
 
 # Others
 ClientBin/
+[Ss]tyle[Cc]op.*
 ~$*
 *~
 *.dbmdl
@@ -221,6 +225,11 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 
+# LightSwitch generated files
+GeneratedArtifacts/
+_Pvt_Extensions/
+ModelManifest.xml
+
 # Visual Studio LightSwitch build output
 **/*.HTMLClient/GeneratedArtifacts
 **/*.DesktopClient/GeneratedArtifacts
@@ -234,3 +243,6 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# Bass Net 库注册信息
+BassNetRegistration.cs
