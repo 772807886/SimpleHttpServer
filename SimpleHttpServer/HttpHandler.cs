@@ -216,12 +216,13 @@ namespace SimpleHttpServer {
             Dictionary<string, string> head = new Dictionary<string, string>();
             head["Content-Type"] = type;
             printHeader(200, head);
-            FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read);
+            FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.Read);
             byte[] buffer = new byte[BUFFER_SIZE];
             int count;
             while((count = fs.Read(buffer, 0, BUFFER_SIZE)) != 0) {
                 output.BaseStream.Write(buffer, 0, count);
             }
+            fs.Close();
             output.BaseStream.Flush();
         }
         /// <summary>
