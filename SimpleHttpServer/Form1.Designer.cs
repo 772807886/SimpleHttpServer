@@ -136,6 +136,7 @@
             this.btnStart.TabIndex = 7;
             this.btnStart.Text = "启动服务";
             this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // label4
             // 
