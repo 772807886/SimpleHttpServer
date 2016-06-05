@@ -13,7 +13,11 @@ namespace SimpleHttpServer {
         /// <summary>
         /// 监听器
         /// </summary>
-        TcpListener listener;
+        private TcpListener listener;
+        /// <summary>
+        /// 服务器开启状态
+        /// </summary>
+        public static bool running = true;
         /// <summary>
         /// HTTP服务
         /// </summary>
@@ -25,8 +29,10 @@ namespace SimpleHttpServer {
         public void listen() {
             listener = new TcpListener(server);
             listener.Start();
-            while(true) {
+            while(running) {
                 TcpClient client = listener.AcceptTcpClient();
+                new HttpHandler(client).start();
+                System.Threading.Thread.Sleep(1);
             }
         }
         public override void run() {

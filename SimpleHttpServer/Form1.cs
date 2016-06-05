@@ -60,7 +60,20 @@ namespace SimpleHttpServer {
         /// 启动服务
         /// </summary>
         private void btnStart_Click(object sender, EventArgs e) {
-            btnStart.Text = "停止服务";
+            if(HttpServer.running) {  //运行中
+                HttpServer.running = false;
+                cbIpAddress.Enabled = true;
+                tbPort.Enabled = true;
+                btnBrowser.Enabled = true;
+                btnStart.Text = "启动服务";
+            } else {
+                HttpServer.running = true;
+                cbIpAddress.Enabled = false;
+                tbPort.Enabled = false;
+                btnBrowser.Enabled = false;
+                new HttpServer(cbIpAddress.Text, int.Parse(tbPort.Text)).start();
+                btnStart.Text = "停止服务";
+            }
         }
     }
 }
