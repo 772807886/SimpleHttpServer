@@ -179,6 +179,14 @@ namespace SimpleHttpServer {
         private void handleRequest() {
             if(Directory.Exists(Form1.root)) {
                 request_url = request_url.Replace('/', '\\');
+                int hash = request_url.LastIndexOf('#');
+                if(hash > 0) {
+                    request_url = request_url.Substring(0, hash);
+                }
+                hash = request_url.LastIndexOf('?');
+                if(hash > 0) {
+                    request_url = request_url.Substring(0, hash);
+                }
                 if(request_url.EndsWith("\\")) {
                     if(File.Exists(Form1.root + request_url + "index.html")) {
                         success(Form1.root + request_url + "index.html");
