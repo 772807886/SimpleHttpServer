@@ -51,6 +51,9 @@ namespace SimpleHttpServer {
         private void btnBrowser_Click(object sender, EventArgs e) {
             if(folderBrowser.ShowDialog() == DialogResult.OK) {
                 root = tbFolder.Text = folderBrowser.SelectedPath;
+                if(root.EndsWith("\\")) {
+                    root = root.Substring(0, root.Length - 1);
+                }
             }
         }
         /// <summary>
