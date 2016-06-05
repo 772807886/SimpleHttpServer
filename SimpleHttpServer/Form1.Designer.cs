@@ -155,10 +155,11 @@
             this.tbConsole.Multiline = true;
             this.tbConsole.Name = "tbConsole";
             this.tbConsole.ReadOnly = true;
-            this.tbConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbConsole.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbConsole.Size = new System.Drawing.Size(380, 352);
             this.tbConsole.TabIndex = 9;
             this.tbConsole.TabStop = false;
+            this.tbConsole.WordWrap = false;
             // 
             // Form1
             // 

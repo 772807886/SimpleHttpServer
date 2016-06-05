@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Sockets;
 
 namespace SimpleHttpServer {
@@ -17,7 +18,7 @@ namespace SimpleHttpServer {
         /// <summary>
         /// 服务器开启状态
         /// </summary>
-        public static bool running = true;
+        public bool running = true;
         /// <summary>
         /// HTTP服务
         /// </summary>
@@ -30,9 +31,18 @@ namespace SimpleHttpServer {
             listener = new TcpListener(server);
             listener.Start();
             while(running) {
-                TcpClient client = listener.AcceptTcpClient();
-                new HttpHandler(client).start();
+                try {
+                    TcpClient client = listener.AcceptTcpClient();
+                    new HttpHandler(client).start();
+                } catch(Exception) {
+                }
                 System.Threading.Thread.Sleep(1);
+            }
+        }
+        public void stop() {
+            if(running) {
+                running = false;
+                listener.Stop();
             }
         }
         public override void run() {

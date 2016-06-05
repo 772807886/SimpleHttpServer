@@ -11,6 +11,10 @@ namespace SimpleHttpServer {
         /// </summary>
         public static Form1 _this = null;
         /// <summary>
+        /// 服务线程
+        /// </summary>
+        private HttpServer server = null;
+        /// <summary>
         /// 根目录
         /// </summary>
         public static string root;
@@ -60,18 +64,18 @@ namespace SimpleHttpServer {
         /// 启动服务
         /// </summary>
         private void btnStart_Click(object sender, EventArgs e) {
-            if(HttpServer.running) {  //运行中
-                HttpServer.running = false;
+            if(server != null && server.running) {  //运行中
+                server.stop();
                 cbIpAddress.Enabled = true;
                 tbPort.Enabled = true;
                 btnBrowser.Enabled = true;
                 btnStart.Text = "启动服务";
             } else {
-                HttpServer.running = true;
                 cbIpAddress.Enabled = false;
                 tbPort.Enabled = false;
                 btnBrowser.Enabled = false;
-                new HttpServer(cbIpAddress.Text, int.Parse(tbPort.Text)).start();
+                server = new HttpServer(cbIpAddress.Text, int.Parse(tbPort.Text));
+                server.start();
                 btnStart.Text = "停止服务";
             }
         }
