@@ -157,6 +157,7 @@
             this.rtbConsole.Size = new System.Drawing.Size(378, 352);
             this.rtbConsole.TabIndex = 9;
             this.rtbConsole.Text = "";
+            this.rtbConsole.WordWrap = false;
             // 
             // Form1
             // 

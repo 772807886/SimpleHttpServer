@@ -17,10 +17,14 @@ namespace SimpleHttpServer {
                 case Type.Error:
                     Form1._this.rtbConsole.SelectionColor = Color.Red;
                     break;
+                case Type.Success:
+                    Form1._this.rtbConsole.SelectionColor = Color.Green;
+                    break;
                 default:
                     break;
                 }
                 Form1._this.rtbConsole.AppendText(s + "\r\n");
+                Form1._this.rtbConsole.ScrollToCaret();
             }, text);
         }
         private delegate void setTextInvoke(string text);
@@ -30,7 +34,8 @@ namespace SimpleHttpServer {
         public enum Type {
             Normal,
             Warning,
-            Error
+            Error,
+            Success
         }
     }
 }
