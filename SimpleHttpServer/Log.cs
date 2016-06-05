@@ -1,11 +1,30 @@
-﻿namespace SimpleHttpServer {
+﻿using System.Drawing;
+
+namespace SimpleHttpServer {
     /// <summary>
     /// 日志记录
     /// </summary>
     class Log {
         public static void log(string text, Type type) {
             Form1._this.Invoke((setTextInvoke)delegate(string s) {
-                Form1._this.tbConsole.Text += s + "\r\n";
+                switch(type) {
+                case Type.Normal:
+                    Form1._this.rtbConsole.SelectionColor = Color.Black;
+                    break;
+                case Type.Warning:
+                    Form1._this.rtbConsole.SelectionColor = Color.Orange;
+                    break;
+                case Type.Error:
+                    Form1._this.rtbConsole.SelectionColor = Color.Red;
+                    break;
+                case Type.Success:
+                    Form1._this.rtbConsole.SelectionColor = Color.Green;
+                    break;
+                default:
+                    break;
+                }
+                Form1._this.rtbConsole.AppendText(s + "\r\n");
+                Form1._this.rtbConsole.ScrollToCaret();
             }, text);
         }
         private delegate void setTextInvoke(string text);
@@ -15,7 +34,8 @@
         public enum Type {
             Normal,
             Warning,
-            Error
+            Error,
+            Success
         }
     }
 }

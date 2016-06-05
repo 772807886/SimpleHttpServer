@@ -88,6 +88,7 @@ namespace SimpleHttpServer {
                 output.Close();
             }
             client.Close();
+            Log.log("", Log.Type.Normal);
         }
         /// <summary>
         /// 读入一行
@@ -215,14 +216,20 @@ namespace SimpleHttpServer {
             }
             Dictionary<string, string> head = new Dictionary<string, string>();
             head["Content-Type"] = type;
-            printHeader(200, head);
-            FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read);
-            byte[] buffer = new byte[BUFFER_SIZE];
-            int count;
-            while((count = fs.Read(buffer, 0, BUFFER_SIZE)) != 0) {
-                output.BaseStream.Write(buffer, 0, count);
+            try {
+                FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.Read);
+                printHeader(200, head);
+                byte[] buffer = new byte[BUFFER_SIZE];
+                int count;
+                while((count = fs.Read(buffer, 0, BUFFER_SIZE)) != 0) {
+                    output.BaseStream.Write(buffer, 0, count);
+                }
+                fs.Close();
+                output.BaseStream.Flush();
+            } catch(Exception e) {
+                Log.log(e.Message, Log.Type.Error);
+                printHeader(403);
             }
-            output.BaseStream.Flush();
         }
         /// <summary>
         /// 输出响应头
@@ -250,6 +257,13 @@ namespace SimpleHttpServer {
             }
             output.WriteLine();
             output.Flush();
+            if(status / 100 == 2) {
+                Log.log(request_http_version + ' ' + status + ' ' + status_string, Log.Type.Success);
+            } else if(status / 100 == 3) {
+                Log.log(request_http_version + ' ' + status + ' ' + status_string, Log.Type.Warning);
+            } else {
+                Log.log(request_http_version + ' ' + status + ' ' + status_string, Log.Type.Error);
+            }
         }
         /// <summary>
         /// HTTP Code状态消息查询
