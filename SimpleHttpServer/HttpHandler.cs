@@ -79,7 +79,7 @@ namespace SimpleHttpServer {
                     throw new Exception("Invalid Http Request Method!");
                 }
                 handleRequest();
-            } catch(Exception e) {
+            } catch(Exception) {
                 printHeader(500);  //服务器错误响应
             } finally {
                 output.Flush();
