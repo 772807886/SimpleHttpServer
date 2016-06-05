@@ -48,7 +48,7 @@ namespace SimpleHttpServer {
         /// <summary>
         /// 请求头
         /// </summary>
-        private Dictionary<string, string> header;
+        private Dictionary<string, string> header = new Dictionary<string, string>();
         /// <summary>
         /// HTTP请求处理
         /// </summary>
@@ -171,7 +171,47 @@ namespace SimpleHttpServer {
             Log.log("Got Post Data!", Log.Type.Normal);
             return ms;
         }
+        /// <summary>
+        /// 处理请求
+        /// </summary>
         private void handleRequest() {
+            if(Directory.Exists(Form1.root)) {
+            } else {  //路径不存在
+            }
+        }
+        /// <summary>
+        /// 输出响应头
+        /// </summary>
+        /// <param name="status">状态码</param>
+        /// <param name="header">响应头</param>
+        private void printHeader(int status, Dictionary<string, string> header) {
+            string status_string = status_name(status);
+            //请求状态
+            output.Write(request_http_version);
+            output.Write(' ');
+            output.Write(status);
+            output.Write(' ');
+            output.WriteLine(status_string);
+            output.WriteLine("Server: C# Simple Http Server 1.0");
+            output.WriteLine("Author: Jin Liming, jinliming2@gmail.com");
+            output.WriteLine("Connection: close");
+            foreach(KeyValuePair<string, string> k in header) {
+                output.Write(k.Key);
+                output.Write(": ");
+                output.WriteLine(k.Value);
+            }
+            output.WriteLine();
+        }
+        /// <summary>
+        /// HTTP Code状态消息查询
+        /// </summary>
+        /// <param name="status">code</param>
+        /// <returns>状态消息</returns>
+        private string status_name(int status) {
+            switch(status) {
+            default:
+                return "";
+            }
         }
     }
 }

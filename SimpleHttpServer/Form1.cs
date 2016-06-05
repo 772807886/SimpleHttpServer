@@ -6,7 +6,14 @@ namespace SimpleHttpServer {
         public Form1() {
             InitializeComponent();
         }
+        /// <summary>
+        /// 当前对象
+        /// </summary>
         public static Form1 _this = null;
+        /// <summary>
+        /// 根目录
+        /// </summary>
+        public static string root;
         /// <summary>
         /// 初始化
         /// </summary>
@@ -43,7 +50,7 @@ namespace SimpleHttpServer {
         /// </summary>
         private void btnBrowser_Click(object sender, EventArgs e) {
             if(folderBrowser.ShowDialog() == DialogResult.OK) {
-                tbFolder.Text = folderBrowser.SelectedPath;
+                root = tbFolder.Text = folderBrowser.SelectedPath;
             }
         }
         /// <summary>
