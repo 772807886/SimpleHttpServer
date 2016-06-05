@@ -5,7 +5,7 @@ namespace SimpleHttpServer {
     /// <summary>
     /// HTTP服务
     /// </summary>
-    class HttpServer {
+    class HttpServer : Thread {
         /// <summary>
         /// 监听地址及端口号
         /// </summary>
@@ -28,6 +28,9 @@ namespace SimpleHttpServer {
             while(true) {
                 TcpClient client = listener.AcceptTcpClient();
             }
+        }
+        public override void run() {
+            listen();
         }
     }
 }

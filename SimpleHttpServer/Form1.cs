@@ -60,6 +60,7 @@ namespace SimpleHttpServer {
         /// 启动服务
         /// </summary>
         private void btnStart_Click(object sender, EventArgs e) {
+            btnStart.Text = "停止服务";
         }
     }
 }

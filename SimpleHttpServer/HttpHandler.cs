@@ -79,9 +79,11 @@ namespace SimpleHttpServer {
                     throw new Exception("Invalid Http Request Method!");
                 }
                 handleRequest();
-            } catch(Exception e) {
+            } catch(Exception) {
                 printHeader(500);  //服务器错误响应
             } finally {
+                output.Flush();
+                output.BaseStream.Flush();
                 input.Close();
                 output.Close();
                 client.GetStream().Close();
@@ -202,7 +204,16 @@ namespace SimpleHttpServer {
                     type = file_mime(file.Substring(p + 1));
                 }
             }
+            Dictionary<string, string> head = new Dictionary<string, string>();
+            head["Content-Type"] = type;
             printHeader(200);
+            FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read);
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int count;
+            while((count = fs.Read(buffer, 0, BUFFER_SIZE)) != 0) {
+                output.BaseStream.Write(buffer, 0, count);
+            }
+            output.BaseStream.Flush();
         }
         /// <summary>
         /// 输出响应头
