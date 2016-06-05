@@ -189,6 +189,8 @@ namespace SimpleHttpServer {
                     }
                 } else if(File.Exists(Form1.root + request_url)) {
                     success(Form1.root + request_url);
+                } else {
+                    printHeader(404);
                 }
             } else {  //路径不存在
                 printHeader(404);
@@ -239,6 +241,7 @@ namespace SimpleHttpServer {
                 }
             }
             output.WriteLine();
+            output.Flush();
         }
         /// <summary>
         /// HTTP Code状态消息查询
