@@ -33,7 +33,7 @@
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.btnStart = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.tbConsole = new System.Windows.Forms.TextBox();
+            this.rtbConsole = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -147,26 +147,23 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "Console:";
             // 
-            // tbConsole
+            // rtbConsole
             // 
-            this.tbConsole.AcceptsReturn = true;
-            this.tbConsole.AcceptsTab = true;
-            this.tbConsole.Location = new System.Drawing.Point(12, 97);
-            this.tbConsole.Multiline = true;
-            this.tbConsole.Name = "tbConsole";
-            this.tbConsole.ReadOnly = true;
-            this.tbConsole.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbConsole.Size = new System.Drawing.Size(380, 352);
-            this.tbConsole.TabIndex = 9;
-            this.tbConsole.TabStop = false;
-            this.tbConsole.WordWrap = false;
+            this.rtbConsole.AcceptsTab = true;
+            this.rtbConsole.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtbConsole.Location = new System.Drawing.Point(14, 97);
+            this.rtbConsole.Name = "rtbConsole";
+            this.rtbConsole.ReadOnly = true;
+            this.rtbConsole.Size = new System.Drawing.Size(378, 352);
+            this.rtbConsole.TabIndex = 9;
+            this.rtbConsole.Text = "";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(404, 461);
-            this.Controls.Add(this.tbConsole);
+            this.Controls.Add(this.rtbConsole);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.tbFolder);
@@ -201,7 +198,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowser;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Label label4;
-        internal System.Windows.Forms.TextBox tbConsole;
+        internal System.Windows.Forms.RichTextBox rtbConsole;
     }
 }
 
