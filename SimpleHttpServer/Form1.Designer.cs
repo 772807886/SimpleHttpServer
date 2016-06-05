@@ -200,7 +200,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowser;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox tbConsole;
+        internal System.Windows.Forms.TextBox tbConsole;
     }
 }
 

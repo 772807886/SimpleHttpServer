@@ -6,10 +6,12 @@ namespace SimpleHttpServer {
         public Form1() {
             InitializeComponent();
         }
+        public static Form1 _this = null;
         /// <summary>
         /// 初始化
         /// </summary>
         private void Form1_Load(object sender, EventArgs e) {
+            _this = this;
             cbIpAddress.SelectedIndex = 0;
         }
         /// <summary>

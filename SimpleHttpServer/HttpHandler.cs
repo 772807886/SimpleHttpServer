@@ -22,10 +22,6 @@ namespace SimpleHttpServer {
         /// </summary>
         private const int MAX_POST_SIZE = 5242880;  //5MiBytes
         /// <summary>
-        /// 请求记录
-        /// </summary>
-        private string log;
-        /// <summary>
         /// 输入流
         /// </summary>
         private Stream input;
@@ -74,13 +70,15 @@ namespace SimpleHttpServer {
                 getHead();
                 switch(request_method) {
                 case "POST":
+                    getPostData();
                     break;
                 case "GET":
                     break;
                 default:
-                    log += "Invalid Http Request Method: " + request_method + '\n';
-                    throw new Exception("Invalid Http Request Method!");\
+                    Log.log("Invalid Http Request Method: " + request_method, Log.Type.Error);
+                    throw new Exception("Invalid Http Request Method!");
                 }
+                handleRequest();
             } catch(Exception e) {
             } finally {
                 input.Close();
@@ -118,13 +116,13 @@ namespace SimpleHttpServer {
             string[] method = line.Split(' ');
             //Method Url Http_version
             if(method.Length != 3) {
-                log += "Invalid Http Request Header!\n";
+                Log.log("Invalid Http Request Header!", Log.Type.Error);
                 throw new Exception("Invalid Http Request Header!");
             }
             request_method = method[0];
             request_url = method[1];
             request_http_version = method[2];
-            log += line;
+            Log.log(line, Log.Type.Normal);
         }
         /// <summary>
         /// 获取请求头
@@ -134,7 +132,7 @@ namespace SimpleHttpServer {
             while((line = readLine()) != string.Empty) {
                 int p = line.IndexOf(':');
                 if(p < 0) {
-                    log += "Invalid Http Header Line: " + line + '\n';
+                    Log.log("Invalid Http Header Line: " + line, Log.Type.Error);
                     throw new Exception("Invalid Http Header Line!");
                 }
                 string key = line.Substring(0, p);
@@ -142,9 +140,38 @@ namespace SimpleHttpServer {
                     p++;
                 }
                 string value = line.Substring(p);
-                log += key + ' ' + value + '\n';
+                Log.log(key + ' ' + value, Log.Type.Normal);
                 header[key] = value;
             }
+        }
+        /// <summary>
+        /// 读取POST上传的数据
+        /// </summary>
+        /// <returns>数据流</returns>
+        private MemoryStream getPostData() {
+            MemoryStream ms = new MemoryStream();
+            if(header.ContainsKey("Content-Length")) {
+                int length = int.Parse(header["Content-Length"]);
+                if(length > MAX_POST_SIZE) {
+                    Log.log("POST length too big!", Log.Type.Error);
+                    throw new Exception("POST length too big!");
+                }
+                byte[] buffer = new byte[BUFFER_SIZE];
+                while(length > 0) {
+                    int read = input.Read(buffer, 0, Math.Min(length, BUFFER_SIZE));
+                    if(read == 0) {
+                        Log.log("Client Disconnected During Post!", Log.Type.Warning);
+                        throw new Exception("Client Disconnected During Post!");
+                    }
+                    ms.Write(buffer, 0, read);
+                    length -= read;
+                }
+                ms.Seek(0, SeekOrigin.Begin);
+            }
+            Log.log("Got Post Data!", Log.Type.Normal);
+            return ms;
+        }
+        private void handleRequest() {
         }
     }
 }
