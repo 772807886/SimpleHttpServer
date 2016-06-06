@@ -219,7 +219,7 @@ namespace SimpleHttpServer {
             string type = "text/html";
             int p = file.LastIndexOf('\\');
             if(p > 0) {
-                p = file.IndexOf('.', p);
+                p = p + 1 + file.Substring(p + 1).LastIndexOf('.');
                 if(p > 0) {
                     type = file_mime(file.Substring(p + 1));
                 }
