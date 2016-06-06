@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
 namespace SimpleHttpServer {
@@ -27,6 +28,9 @@ namespace SimpleHttpServer {
         public HttpServer(string ip_address, int port) {
             this.server = new IPEndPoint(IPAddress.Parse(ip_address), port);
         }
+        /// <summary>
+        /// 开始监听
+        /// </summary>
         public void listen() {
             listener = new TcpListener(server);
             listener.Start();
@@ -39,14 +43,37 @@ namespace SimpleHttpServer {
                 System.Threading.Thread.Sleep(1);
             }
         }
+        /// <summary>
+        /// 终止监听线程
+        /// </summary>
         public void stop() {
             if(running) {
                 running = false;
                 listener.Stop();
             }
         }
+        /// <summary>
+        /// 启动线程
+        /// </summary>
         public override void run() {
             listen();
+        }
+        /// <summary>
+        /// 端口是否被占用
+        /// </summary>
+        /// <param name="port">端口</param>
+        /// <returns>检测结果</returns>
+        public static bool PortInUse(int port) {
+            bool inUse = false;
+            IPGlobalProperties ipProperties = IPGlobalProperties.GetIPGlobalProperties();
+            IPEndPoint[] ipEndPoints = ipProperties.GetActiveTcpListeners();
+            foreach(IPEndPoint endPoint in ipEndPoints) {
+                if(endPoint.Port == port) {
+                    inUse = true;
+                    break;
+                }
+            }
+            return inUse;
         }
     }
 }
