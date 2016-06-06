@@ -145,7 +145,9 @@ namespace SimpleHttpServer {
                     p++;
                 }
                 string value = line.Substring(p);
-                Log.log(key + ' ' + value, Log.Type.Normal);
+                if(Form1._this.ckbLog.Checked) {
+                    Log.log(key + ' ' + value, Log.Type.Normal);
+                }
                 header[key] = value;
             }
         }
@@ -173,7 +175,9 @@ namespace SimpleHttpServer {
                 }
                 ms.Seek(0, SeekOrigin.Begin);
             }
-            Log.log("Got Post Data!", Log.Type.Normal);
+            if(Form1._this.ckbLog.Checked) {
+                Log.log("Got Post Data!", Log.Type.Normal);
+            }
             return ms;
         }
         /// <summary>

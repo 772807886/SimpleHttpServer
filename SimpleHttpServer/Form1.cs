@@ -81,5 +81,13 @@ namespace SimpleHttpServer {
                 btnStart.Text = "停止服务";
             }
         }
+        /// <summary>
+        /// 窗口关闭时停止服务线程
+        /// </summary>
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+            if(server != null && server.running) {  //运行中
+                server.stop();
+            }
+        }
     }
 }

@@ -34,6 +34,7 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.rtbConsole = new System.Windows.Forms.RichTextBox();
+            this.ckbLog = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -159,11 +160,22 @@
             this.rtbConsole.Text = "";
             this.rtbConsole.WordWrap = false;
             // 
+            // ckbLog
+            // 
+            this.ckbLog.AutoSize = true;
+            this.ckbLog.Location = new System.Drawing.Point(239, 72);
+            this.ckbLog.Name = "ckbLog";
+            this.ckbLog.Size = new System.Drawing.Size(72, 16);
+            this.ckbLog.TabIndex = 10;
+            this.ckbLog.Text = "详细日志";
+            this.ckbLog.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(404, 461);
+            this.Controls.Add(this.ckbLog);
             this.Controls.Add(this.rtbConsole);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnStart);
@@ -181,6 +193,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Simple Http Server";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -200,6 +213,7 @@
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Label label4;
         internal System.Windows.Forms.RichTextBox rtbConsole;
+        internal System.Windows.Forms.CheckBox ckbLog;
     }
 }
 
