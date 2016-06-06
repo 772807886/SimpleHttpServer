@@ -25,7 +25,7 @@ namespace SimpleHttpServer {
         private void Form1_Load(object sender, EventArgs e) {
             _this = this;
             cbIpAddress.SelectedIndex = 0;
-            root = tbFolder.Text = Directory.GetCurrentDirectory();
+            root = tbFolder.Text = folderBrowser.SelectedPath = Directory.GetCurrentDirectory();
         }
         /// <summary>
         /// 端口输入检测，只允许数字

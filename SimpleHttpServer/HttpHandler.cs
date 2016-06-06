@@ -81,11 +81,11 @@ namespace SimpleHttpServer {
                     throw new Exception("Invalid Http Request Method!");
                 }
                 handleRequest();
+                output.Flush();
+                output.BaseStream.Flush();
             } catch(Exception) {
                 printHeader(500);  //服务器错误响应
             } finally {
-                output.Flush();
-                output.BaseStream.Flush();
                 input.Close();
                 output.Close();
             }
@@ -228,6 +228,7 @@ namespace SimpleHttpServer {
             head["Content-Type"] = type;
             try {
                 FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.Read);
+                head["Content-Length"] = fs.Length.ToString();
                 printHeader(200, head);
                 byte[] buffer = new byte[BUFFER_SIZE];
                 int count;
