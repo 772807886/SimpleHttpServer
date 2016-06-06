@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace SimpleHttpServer {
@@ -24,6 +25,7 @@ namespace SimpleHttpServer {
         private void Form1_Load(object sender, EventArgs e) {
             _this = this;
             cbIpAddress.SelectedIndex = 0;
+            root = tbFolder.Text = folderBrowser.SelectedPath = Directory.GetCurrentDirectory();
         }
         /// <summary>
         /// 端口输入检测，只允许数字
@@ -77,6 +79,14 @@ namespace SimpleHttpServer {
                 server = new HttpServer(cbIpAddress.Text, int.Parse(tbPort.Text));
                 server.start();
                 btnStart.Text = "停止服务";
+            }
+        }
+        /// <summary>
+        /// 窗口关闭时停止服务线程
+        /// </summary>
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+            if(server != null && server.running) {  //运行中
+                server.stop();
             }
         }
     }

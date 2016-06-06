@@ -60,6 +60,8 @@ namespace SimpleHttpServer {
         /// 执行
         /// </summary>
         public override void run() {
+            //请求时间
+            Log.log(DateTime.Now.ToLocalTime().ToString(), Log.Type.Normal);
             //输入输出流
             input = new BufferedStream(client.GetStream());
             output = new StreamWriter(new BufferedStream(client.GetStream()));
@@ -79,11 +81,11 @@ namespace SimpleHttpServer {
                     throw new Exception("Invalid Http Request Method!");
                 }
                 handleRequest();
+                output.Flush();
+                output.BaseStream.Flush();
             } catch(Exception) {
                 printHeader(500);  //服务器错误响应
             } finally {
-                output.Flush();
-                output.BaseStream.Flush();
                 input.Close();
                 output.Close();
             }
@@ -143,7 +145,9 @@ namespace SimpleHttpServer {
                     p++;
                 }
                 string value = line.Substring(p);
-                Log.log(key + ' ' + value, Log.Type.Normal);
+                if(Form1._this.ckbLog.Checked) {
+                    Log.log(key + ' ' + value, Log.Type.Normal);
+                }
                 header[key] = value;
             }
         }
@@ -171,7 +175,9 @@ namespace SimpleHttpServer {
                 }
                 ms.Seek(0, SeekOrigin.Begin);
             }
-            Log.log("Got Post Data!", Log.Type.Normal);
+            if(Form1._this.ckbLog.Checked) {
+                Log.log("Got Post Data!", Log.Type.Normal);
+            }
             return ms;
         }
         /// <summary>
@@ -205,6 +211,10 @@ namespace SimpleHttpServer {
                 printHeader(404);
             }
         }
+        /// <summary>
+        /// 成功响应，返回文件
+        /// </summary>
+        /// <param name="file">文件</param>
         private void success(string file) {
             string type = "text/html";
             int p = file.LastIndexOf('\\');
@@ -218,6 +228,7 @@ namespace SimpleHttpServer {
             head["Content-Type"] = type;
             try {
                 FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.Read);
+                head["Content-Length"] = fs.Length.ToString();
                 printHeader(200, head);
                 byte[] buffer = new byte[BUFFER_SIZE];
                 int count;
@@ -386,6 +397,11 @@ namespace SimpleHttpServer {
                 return "";
             }
         }
+        /// <summary>
+        /// 文件MIME查询
+        /// </summary>
+        /// <param name="extension">拓展名</param>
+        /// <returns>MIME字符串</returns>
         private string file_mime(string extension) {
             switch(extension) {
             case "323":
