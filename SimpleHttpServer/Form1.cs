@@ -72,6 +72,9 @@ namespace SimpleHttpServer {
                 tbPort.Enabled = true;
                 btnBrowser.Enabled = true;
                 btnStart.Text = "启动服务";
+            } else if(HttpServer.PortInUse(int.Parse(tbPort.Text))) {
+                MessageBox.Show("端口被占用！请尝试更换端口号！", "启动失败", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                tbPort.Focus();
             } else {
                 cbIpAddress.Enabled = false;
                 tbPort.Enabled = false;
