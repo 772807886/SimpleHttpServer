@@ -60,6 +60,8 @@ namespace SimpleHttpServer {
         /// 执行
         /// </summary>
         public override void run() {
+            //请求时间
+            Log.log(DateTime.Now.ToLocalTime().ToString(), Log.Type.Normal);
             //输入输出流
             input = new BufferedStream(client.GetStream());
             output = new StreamWriter(new BufferedStream(client.GetStream()));
@@ -205,6 +207,10 @@ namespace SimpleHttpServer {
                 printHeader(404);
             }
         }
+        /// <summary>
+        /// 成功响应，返回文件
+        /// </summary>
+        /// <param name="file">文件</param>
         private void success(string file) {
             string type = "text/html";
             int p = file.LastIndexOf('\\');
@@ -386,6 +392,11 @@ namespace SimpleHttpServer {
                 return "";
             }
         }
+        /// <summary>
+        /// 文件MIME查询
+        /// </summary>
+        /// <param name="extension">拓展名</param>
+        /// <returns>MIME字符串</returns>
         private string file_mime(string extension) {
             switch(extension) {
             case "323":
